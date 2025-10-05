@@ -17,9 +17,10 @@ Copy the module files to your project and import them.
 ### Structure
 biofastq_utils/
 
-filter_fastq.py # calculate_gc, calculate_average_quality, filter_sequence
-module.py # is_dna, is_rna, is_nucleic_acid, transcribe, reverse, complement, reverse_complement
-run_dna_rna_tools.py # module operation
+main.py contains filter_fastq(), run_dna_rna_tools()
+module.py contains calculate_gc, calculate_average_quality, filter_sequence
+module_2.py contains is_dna, is_rna, is_nucleic_acid, transcribe, reverse, complement, reverse_complement
+
 README.md
 
 ### filter_fastq.py
@@ -34,7 +35,16 @@ filter_sequence - check sequence against criteria
 
 filter_fastq - filter dictionary of sequences
 
-Usage example:
+### Usage example:
+
+Parameters:
+gc_bounds: (low, high) as a percentage, inclusive.
+You can pass a single number x. It will be considered the upper bound of [0, x].
+
+length_bounds: (low, high) for the length, inclusive.
+
+quality_threshold: minimum average quality (Phred+33).
+
 filtered = filter_fastq(
     sequences,
     gc_bounds=(20, 80),
@@ -58,7 +68,7 @@ reverse_complement - reverse complementary strand
 
 run_dna_rna_tools - universal function for all operations
 
-Usage example:
+### Usage example:
 
 #### Type checking
 run_dna_rna_tools("ATCG", "is_dna")
