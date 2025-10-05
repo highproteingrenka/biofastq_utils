@@ -52,3 +52,67 @@ def is_nucleic_acid(*sequences:str)->str:
             unique_chars = set(seq)
             valid_seq = (unique_chars <= alphabet_rna) or (unique_chars <= alphabet_dna)
             return valid_seq
+
+def transcribe(*sequences: str)->str:
+    """
+    Transcribe DNA to RNA by replacing T with U.
+    *sequences: str
+    Returns transcribed sequence or None and WARNING for invalid input.
+    """
+    for seq in sequences:
+        if is_nucleic_acid(seq):
+            transcribed_seq = ""
+            for char in seq:
+                if char == "T":
+                    transcribed_seq += "U"
+                else:
+                    transcribed_seq += char
+        else:
+            print("WARNING: недопустимые символы — верну None")
+            return
+        return transcribed_seq
+
+def reverse(*sequences: str)->str:
+    """
+    Reverse the nucleic acid sequence.
+    *sequences: str
+    Returns reversed sequence or None and WARNING for invalid input.
+    """
+    for seq in sequences:
+        if is_nucleic_acid(seq):
+            return seq[::-1]
+        else:
+            print("WARNING: недопустимые символы — верну None")
+            return
+
+def complement(*sequences: str)->str:
+    """
+    Get complementary strand for DNA or RNA sequence.
+    *sequences: str
+    Returns complementary sequence or None and WARNING for invalid input.
+    """
+    for seq in sequences:
+        if is_nucleic_acid(seq) and is_dna(seq):
+            for nucleotide in seq:
+                return "".join([dict_complement_dna[nucleotide] for nucleotide in seq])
+
+        if is_nucleic_acid(seq) and is_rna(seq):
+            for nucleotide in seq:
+                return "".join([dict_complement_rna[nucleotide] for nucleotide in seq])
+        else:
+            print("WARNING: недопустимые символы — верну None")
+            return
+
+def reverse_complement(*sequences: str)->str:
+    """
+    Get reverse complement of nucleic acid sequence.
+    *sequences: str
+    Returns reverse complement or None and WARNING for invalid input.
+    """
+    for seq in sequences:
+        if is_nucleic_acid(seq):
+            reversed_seq = reverse(seq)
+            return complement(reversed_seq)
+        else:
+            print("WARNING: недопустимые символы — верну None")
+            return
