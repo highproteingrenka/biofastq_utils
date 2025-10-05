@@ -8,10 +8,11 @@ def calculate_gc(sequence: str) -> float:
     Returns float.
     Raises exception if len(sequence) is 0
     """
-    if len(sequence)==0:
+    if len(sequence) == 0:
         return 0.0
-    gc_count = sequence.upper().count('G') + sequence.upper().count('C')
+    gc_count = sequence.upper().count("G") + sequence.upper().count("C")
     return (gc_count / len(sequence)) * 100
+
 
 def calculate_average_quality(quality: str) -> float:
     """
@@ -23,9 +24,16 @@ def calculate_average_quality(quality: str) -> float:
     Returns float.
     """
     quality_scores = [ord(char) - 33 for char in quality]
-    return sum(quality_scores)/ len(quality_scores)
+    return sum(quality_scores) / len(quality_scores)
 
-def filter_sequence(sequence: str, quality: str, gc_bounds=(0, 100), length_bounds=(0, 2**32), quality_threshold=0) -> bool:
+
+def filter_sequence(
+    sequence: str,
+    quality: str,
+    gc_bounds=(0, 100),
+    length_bounds=(0, 2**32),
+    quality_threshold=0,
+) -> bool:
     """
     Checks whether the sequence passes all filters.
 

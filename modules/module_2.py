@@ -8,7 +8,7 @@ dict_complement_dna = {
     "a": "t",
     "t": "a",
     "g": "c",
-    "c": "g"
+    "c": "g",
 }
 dict_complement_rna = {
     "A": "U",
@@ -18,9 +18,11 @@ dict_complement_rna = {
     "a": "u",
     "u": "a",
     "g": "c",
-    "c": "g"
+    "c": "g",
 }
-def is_dna(*sequences: str)->str:
+
+
+def is_dna(*sequences: str) -> str:
     """
     Check if all sequences contain only valid DNA nucleotides (A, T, G, C).
     *sequences: str
@@ -28,10 +30,11 @@ def is_dna(*sequences: str)->str:
     """
     for seq in sequences:
         unique_chars = set(seq)
-        valid_seq = (unique_chars <= alphabet_dna)
+        valid_seq = unique_chars <= alphabet_dna
         return valid_seq
 
-def is_rna(*sequences:str)->str:
+
+def is_rna(*sequences: str) -> str:
     """
     Check if all sequences contain only valid RNA nucleotides (A, U, G, C).
     *sequences: str
@@ -39,21 +42,23 @@ def is_rna(*sequences:str)->str:
     """
     for seq in sequences:
         unique_chars = set(seq)
-        valid_seq = (unique_chars <= alphabet_rna)
+        valid_seq = unique_chars <= alphabet_rna
         return valid_seq
 
-def is_nucleic_acid(*sequences:str)->str:
+
+def is_nucleic_acid(*sequences: str) -> str:
     """
     Check if sequences contain valid nucleic acid characters (DNA or RNA).
     *sequences: str
     Returns True if all characters are valid DNA or RNA nucleotides, False otherwise.
     """
     for seq in sequences:
-            unique_chars = set(seq)
-            valid_seq = (unique_chars <= alphabet_rna) or (unique_chars <= alphabet_dna)
-            return valid_seq
+        unique_chars = set(seq)
+        valid_seq = (unique_chars <= alphabet_rna) or (unique_chars <= alphabet_dna)
+        return valid_seq
 
-def transcribe(*sequences: str)->str:
+
+def transcribe(*sequences: str) -> str:
     """
     Transcribe DNA to RNA by replacing T with U.
     *sequences: str
@@ -72,7 +77,8 @@ def transcribe(*sequences: str)->str:
             return
         return transcribed_seq
 
-def reverse(*sequences: str)->str:
+
+def reverse(*sequences: str) -> str:
     """
     Reverse the nucleic acid sequence.
     *sequences: str
@@ -85,7 +91,8 @@ def reverse(*sequences: str)->str:
             print("WARNING: недопустимые символы — верну None")
             return
 
-def complement(*sequences: str)->str:
+
+def complement(*sequences: str) -> str:
     """
     Get complementary strand for DNA or RNA sequence.
     *sequences: str
@@ -103,7 +110,8 @@ def complement(*sequences: str)->str:
             print("WARNING: недопустимые символы — верну None")
             return
 
-def reverse_complement(*sequences: str)->str:
+
+def reverse_complement(*sequences: str) -> str:
     """
     Get reverse complement of nucleic acid sequence.
     *sequences: str
