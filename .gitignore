@@ -24,3 +24,4 @@ venv/
 .env
 *.log
 .DS_Store
+tests.py
