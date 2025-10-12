@@ -42,7 +42,12 @@ def run_dna_rna_tools(*sequences: str) -> str:
 
 
 def filter_fastq(
-    input_fastq: str, output_fastq: str, *, gc_bounds=(0, 100), length_bounds=(0, 2**32), quality_threshold=0
+    input_fastq: str,
+    output_fastq: str,
+    *,
+    gc_bounds=(0, 100),
+    length_bounds=(0, 2**32),
+    quality_threshold=0
 ) -> dict:
     """
     Filters FASTQ sequences according to the specified criteria.

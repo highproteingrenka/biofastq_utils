@@ -26,7 +26,10 @@ def calculate_average_quality(quality: str) -> float:
     quality_scores = [ord(char) - 33 for char in quality]
     return sum(quality_scores) / len(quality_scores)
 
-def as_interval(bounds: tuple[float, float] | int | float, *, default_lo: float, default_hi: float) -> tuple[float, float]:
+
+def as_interval(
+    bounds: tuple[float, float] | int | float, *, default_lo: float, default_hi: float
+) -> tuple[float, float]:
     """
     Turns a single number (as an upper bound) or a tuple into an interval [lo, hi].
     """
@@ -34,6 +37,7 @@ def as_interval(bounds: tuple[float, float] | int | float, *, default_lo: float,
         return float(default_lo), float(bounds)
     lo, hi = bounds
     return float(lo), float(hi)
+
 
 def passes_length(sequence: str, length_bounds=(0, 2**32)) -> bool:
     lo, hi = as_interval(length_bounds, default_lo=0, default_hi=2**32)
@@ -50,6 +54,7 @@ def passes_gc(sequence: str, gc_bounds=(0, 100)) -> bool:
 def passes_quality(quality: str, threshold=0) -> bool:
     avg_q = calculate_average_quality(quality)
     return avg_q >= float(threshold)
+
 
 def filter_sequence(
     sequence: str,
@@ -69,26 +74,29 @@ def filter_sequence(
 
     Returns bool.
     """
-    if len(sequence)!= len(quality):
+    if len(sequence) != len(quality):
         return False
     return (
-            passes_length(sequence, length_bounds)
-            and passes_gc(sequence, gc_bounds)
-            and passes_quality(quality, quality_threshold)
+        passes_length(sequence, length_bounds)
+        and passes_gc(sequence, gc_bounds)
+        and passes_quality(quality, quality_threshold)
     )
 
+
 from pathlib import Path
+
+
 def read_fastq(path: str) -> dict:
     path_to_file = Path(path)
-    seqs={}
+    seqs = {}
     with path_to_file.open("r") as file_fastq:
         while True:
             name = file_fastq.readline()
             if not name:
-                break  
+                break
             seq = file_fastq.readline()
             plus = file_fastq.readline()
-            qual= file_fastq.readline()
+            qual = file_fastq.readline()
 
             if not (seq and plus and qual):
                 break
@@ -101,10 +109,11 @@ def read_fastq(path: str) -> dict:
             seqs[name] = (seq, qual)
     return seqs
 
+
 def write_fastq(seqs: dict, output_fastq: str) -> Path:
     out_dir = Path("filtered")
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / Path(output_fastq).name  
+    out_path = out_dir / Path(output_fastq).name
     with out_path.open("w") as out:
         for header, (seq, qual) in seqs.items():
             out.write(f"{header}\n{seq}\n+\n{qual}\n")

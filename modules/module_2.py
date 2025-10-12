@@ -22,7 +22,7 @@ dict_complement_rna = {
 }
 
 
-def is_dna(sequence: str)->bool:
+def is_dna(sequence: str) -> bool:
     """
     Check if all sequences contain only valid DNA nucleotides (A, T, G, C).
     sequence: bool
@@ -31,10 +31,11 @@ def is_dna(sequence: str)->bool:
     if not sequence:
         return False
     unique_chars = set(sequence)
-    valid_seq = (unique_chars <= alphabet_dna)
+    valid_seq = unique_chars <= alphabet_dna
     return valid_seq
 
-def is_rna(sequence:str)->bool:
+
+def is_rna(sequence: str) -> bool:
     """
     Check if all sequences contain only valid RNA nucleotides (A, U, G, C).
     sequence: bool
@@ -43,10 +44,11 @@ def is_rna(sequence:str)->bool:
     if not sequence:
         return False
     unique_chars = set(sequence)
-    valid_seq = (unique_chars <= alphabet_rna)
+    valid_seq = unique_chars <= alphabet_rna
     return valid_seq
 
-def is_nucleic_acid(sequence:str)->bool:
+
+def is_nucleic_acid(sequence: str) -> bool:
     """
     Check if sequences contain valid nucleic acid characters (DNA or RNA).
     sequence: bool
@@ -58,7 +60,8 @@ def is_nucleic_acid(sequence:str)->bool:
     valid_seq = (unique_chars <= alphabet_rna) or (unique_chars <= alphabet_dna)
     return valid_seq
 
-def transcribe(sequence: str)->str:
+
+def transcribe(sequence: str) -> str:
     """
     Transcribe DNA to RNA by replacing T with U.
     sequence: str
@@ -78,42 +81,46 @@ def transcribe(sequence: str)->str:
         return
     return transcribed_seq
 
-def reverse(sequence: str)->str:
+
+def reverse(sequence: str) -> str:
     """
     Reverse the nucleic acid sequence.
     sequence: str
     Returns reversed sequence or None and WARNING for invalid input.
     """
-    #for seq in sequences:
+    # for seq in sequences:
     if is_nucleic_acid(sequence):
         return sequence[::-1]
     else:
         print("WARNING: invalid characters — return None")
         return
 
-def complement(sequence: str)->str:
+
+def complement(sequence: str) -> str:
     """
     Get complementary strand for DNA or RNA sequence.
     sequence: str
     Returns complementary sequence or None and WARNING for invalid input.
     """
-    #for seq in sequences:
+    # for seq in sequences:
     if is_nucleic_acid(sequence) and is_dna(sequence):
-            #for nucleotide in sequences:
+        # for nucleotide in sequences:
         return "".join([dict_complement_dna[nucleotide] for nucleotide in sequence])
     elif is_nucleic_acid(sequence) and is_rna(sequence):
-            #for nucleotide in sequences:
+        # for nucleotide in sequences:
         return "".join([dict_complement_rna[nucleotide] for nucleotide in sequence])
     else:
         print("WARNING: invalid characters — return None")
         return
-def reverse_complement(sequence: str)->str:
+
+
+def reverse_complement(sequence: str) -> str:
     """
     Get reverse complement of nucleic acid sequence.
     sequence: str
     Returns reverse complement or None and WARNING for invalid input.
     """
-    #for seq in sequence:
+    # for seq in sequence:
     if is_nucleic_acid(sequence):
         reversed_seq = reverse(sequence)
         return complement(reversed_seq)
@@ -121,7 +128,8 @@ def reverse_complement(sequence: str)->str:
         print("WARNING: invalid characters — return None")
         return
 
-def run_dna_rna_tools(*sequences: str)->str:
+
+def run_dna_rna_tools(*sequences: str) -> str:
     """
     Universal function that applies DNA/RNA operations (transcription, complement, reverse, etc.) to one or multiple sequences.
 
@@ -131,7 +139,13 @@ def run_dna_rna_tools(*sequences: str)->str:
     Returns single result if one sequence provided, list of results otherwise.
     """
     *seqs, operation = sequences
-    operations = { "is_nucleic_acid": is_nucleic_acid, "transcribe": transcribe, "reverse": reverse,  "complement": complement, "reverse_complement": reverse_complement }
+    operations = {
+        "is_nucleic_acid": is_nucleic_acid,
+        "transcribe": transcribe,
+        "reverse": reverse,
+        "complement": complement,
+        "reverse_complement": reverse_complement,
+    }
     if operation in operations:
         func = operations[operation]
         results = [func(seq) for seq in seqs]
