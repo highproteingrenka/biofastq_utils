@@ -69,7 +69,7 @@ def filter_sequence(
 
     Returns bool.
     """
-        if len(sequence)!= len(quality):
+    if len(sequence)!= len(quality):
         return False
     return (
             passes_length(sequence, length_bounds)
