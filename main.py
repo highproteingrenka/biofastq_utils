@@ -2,6 +2,8 @@ from modules.module import (
     calculate_gc,
     calculate_average_quality,
     filter_sequence,
+    read_fastq,
+    write_fastq,
 )
 
 
@@ -40,22 +42,30 @@ def run_dna_rna_tools(*sequences: str) -> str:
 
 
 def filter_fastq(
-    seqs: dict, *, gc_bounds=(0, 100), length_bounds=(0, 2**32), quality_threshold=0
+    input_fastq: str, output_fastq: str, *, gc_bounds=(0, 100), length_bounds=(0, 2**32), quality_threshold=0
 ) -> dict:
     """
     Filters FASTQ sequences according to the specified criteria.
 
-    seqs: dict
+    input_fastq: str (path)
+    output_fastq: str (path)
     gc_bounds: tuple / float
     length_bounds tuple / float
     quality_threshold int / float
 
     Returns dict.
     """
-    filtered_seqs = {}
-    for seq_name, (sequence, quality) in seqs.items():
+    seqs = read_fastq(input_fastq)
+    filtered = {
+        name: (seq, qual)
+        for name, (seq, qual) in seqs.items()
         if filter_sequence(
-            sequence, quality, gc_bounds, length_bounds, quality_threshold
-        ):
-            filtered_seqs[seq_name] = (sequence, quality)
-    return filtered_seqs
+            seq,
+            qual,
+            gc_bounds=gc_bounds,
+            length_bounds=length_bounds,
+            quality_threshold=quality_threshold,
+        )
+    }
+    write_fastq(filtered, output_fastq)
+    return filtered
