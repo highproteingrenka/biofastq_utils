@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Виртуальное окружение
+.venv/
+venv/
+
+# IDE/редакторы
+.vscode/
+.idea/
+
+# Прочее
+.env
+*.log
+.DS_Store
+tests.py
+check_filter.py
+demo.fastq
+filtered/
